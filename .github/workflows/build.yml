@@ -36,7 +36,7 @@ jobs:
       - name: Run today.py to generate banner
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python today.py
+        run: python index.py
         continue-on-error: false
 
       - name: Commit and push changes

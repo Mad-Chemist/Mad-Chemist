@@ -243,6 +243,17 @@ def cache_builder(edges, comment_size, force_cache, loc_add=0, loc_del=0):
 
     cache_comment = data[:comment_size] # save the comment block
     data = data[comment_size:] # remove those lines
+
+    # Verify data length matches len(edges)
+    if len(data) != len(edges):
+        print(f"Cache file mismatch: expected {len(edges)} entries, found {len(data)}. Reinitializing cache...", flush=True)
+        flush_cache(edges, filename, comment_size)
+        time.sleep(0.1)
+        with open(filename, 'r') as f:
+            data = f.readlines()
+        cache_comment = data[:comment_size]
+        data = data[comment_size:]
+
     for index in range(len(edges)):
         repo_hash, commit_count, *__ = data[index].split()
         if repo_hash == hashlib.sha256(edges[index]['node']['nameWithOwner'].encode('utf-8')).hexdigest():

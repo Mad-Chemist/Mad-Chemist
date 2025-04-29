@@ -16,15 +16,9 @@
         text, tspan {white-space: pre;}
     </style>
     <rect width="985px" height="530px" fill="#f6f8fa" rx="15"/>
-    <text x="15" y="30" fill="#24292f" class="ascii" id="avatar">YYYbYYbYYYYYYbbYYYYY
-kkkkkAAZYbXGkkYYYYYY
-OOOOky})Tw)"IEOkkkkk
-OOAAA#`/?7),%ZAkkkOO
-AAAO&amp;4{[#ujj#XAkkOOO
-AAAA&amp;Fum6p5#]7GAAOkO
-AAAA&amp;ETpp6p7aI!AOAAA
-AAAAAAFTSmF5L*%dAOAA
-OOkkkOEl7q5oc%&gt;%hOkk<tspan x="15" y="30">YYYbYYbYYYYYYbbYYYYY</tspan><tspan x="15" y="50">kkkkkAAZYbXGkkYYYYYY</tspan><tspan x="15" y="70">OOOOky})Tw)"IEOkkkkk</tspan><tspan x="15" y="90">OOAAA#`/?7),%ZAkkkOO</tspan><tspan x="15" y="110">AAAO&amp;4{[#ujj#XAkkOOO</tspan><tspan x="15" y="130">AAAA&amp;Fum6p5#]7GAAOkO</tspan><tspan x="15" y="150">AAAA&amp;ETpp6p7aI!AOAAA</tspan><tspan x="15" y="170">AAAAAAFTSmF5L*%dAOAA</tspan><tspan x="15" y="190">OOkkkOEl7q5oc%&gt;%hOkk</tspan></text>
+    <text x="15" y="30" fill="#24292f" class="ascii" id="avatar">
+        <tspan x="15" y="30">YYYbYYbYYYYYYbbYYYYY</tspan><tspan x="15" y="50">kkkkkAAZYbXGkkYYYYYY</tspan><tspan x="15" y="70">OOOOky})Tw)"IEOkkkkk</tspan><tspan x="15" y="90">OOAAA#`/?7),%ZAkkkOO</tspan><tspan x="15" y="110">AAAO&amp;4{[#ujj#XAkkOOO</tspan><tspan x="15" y="130">AAAA&amp;Fum6p5#]7GAAOkO</tspan><tspan x="15" y="150">AAAA&amp;ETpp6p7aI!AOAAA</tspan><tspan x="15" y="170">AAAAAAFTSmF5L*%dAOAA</tspan><tspan x="15" y="190">OOkkkOEl7q5oc%&gt;%hOkk</tspan>
+    </text>
     <text x="390" y="30" fill="#24292f">
         <tspan x="390" y="450">- GitHub Stats</tspan> -—————————————————————————————————————————-—-
         <tspan x="390" y="470" class="cc">. </tspan><tspan class="key">Repos</tspan>:<tspan class="cc" id="repo_data_dots"> .... </tspan><tspan class="value" id="repo_data">47</tspan> {<tspan class="key">Contributed</tspan>: <tspan class="value" id="contrib_data">47</tspan>} | <tspan class="key">Stars</tspan>:<tspan class="cc" id="star_data_dots"> ............. </tspan><tspan class="value" id="star_data">2</tspan>

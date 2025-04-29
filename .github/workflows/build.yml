@@ -39,13 +39,14 @@ jobs:
           USER_NAME: ${{ secrets.USER_NAME }}
         run: python index.py
         timeout-minutes: 5
-        continue-on-error: false
+        continue-on-error: true
 
       - name: Commit and push changes
         run: |
           git config --global user.email "github-actions-bot@Mad-Chemist.github.io"
           git config --global user.name "Mad-Chemist/GitHub-Actions-Bot"
           git add light_mode.svg dark_mode.svg
+          git add cache/*
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else

@@ -33,7 +33,7 @@ jobs:
           pip install -r requirements.txt
         continue-on-error: false
 
-      - name: Run today.py to generate banner
+      - name: Generate Banner and Generate README
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           USER_NAME: ${{ secrets.USER_NAME }}

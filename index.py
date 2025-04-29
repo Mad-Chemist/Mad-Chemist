@@ -361,6 +361,7 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
 def draw_avatar_ascii(root, avatar_text):
     start_x = 15
     start_y = 30
+    line_height = 20
     ascii_art_lines = avatar_text.split('\n')
     avatar = root.find(f".//*[@id='avatar']")
     # Clear any existing content

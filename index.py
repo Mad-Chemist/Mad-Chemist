@@ -150,7 +150,7 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
     time.sleep(1.0)  # Add 1-second delay
     retry_range = 5;
     for attempt in range(retry_range):  # Retry up to 3 times
-        print(f"Making request in recursive_loc (attempt {attempt + 1}/{retry_range})... {repo_name}", flush=True)
+        print(f"Making request in recursive_loc (attempt {attempt + 1}/{retry_range})...", flush=True)
         request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS, timeout=20)
         if request.status_code == 200:
             if request.json()['data']['repository']['defaultBranchRef'] != None:

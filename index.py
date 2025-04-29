@@ -81,7 +81,7 @@ def graph_repos_stars(count_type, owner_affiliation, cursor=None, add_loc=0, del
     query = '''
     query ($owner_affiliation: [RepositoryAffiliation], $login: String!, $cursor: String) {
         user(login: $login) {
-            repositories(first: 50, after: $cursor, ownerAffiliations: $owner_affiliation) {
+            repositories(first: 100, after: $cursor, ownerAffiliations: $owner_affiliation) {
                 totalCount
                 edges {
                     node {
@@ -111,7 +111,7 @@ def graph_repos_stars(count_type, owner_affiliation, cursor=None, add_loc=0, del
 
 def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, deletion_total=0, my_commits=0, cursor=None):
     """
-    Uses GitHub's GraphQL v4 API and cursor pagination to fetch 50 commits from a repository at a time
+    Uses GitHub's GraphQL v4 API and cursor pagination to fetch 100 commits from a repository at a time
     """
     query_count('recursive_loc')
     query = '''
@@ -120,7 +120,7 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
             defaultBranchRef {
                 target {
                     ... on Commit {
-                        history(first: 50, after: $cursor) {
+                        history(first: 100, after: $cursor) {
                             totalCount
                             edges {
                                 node {
@@ -148,7 +148,7 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
     }'''
     variables = {'repo_name': repo_name, 'owner': owner, 'cursor': cursor}
     time.sleep(1.0)  # Add 1-second delay
-    retry_range = 3;
+    retry_range = 5;
     for attempt in range(retry_range):  # Retry up to 3 times
         print(f"Making request in recursive_loc (attempt {attempt + 1}/{retry_range})... {repo_name}", flush=True)
         request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS, timeout=20)
@@ -159,7 +159,7 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
                 return 0
         elif request.status_code in (502, 503, 504):  # Retry on gateway errors
             print(f"API request in recursive_loc failed with status {request.status_code}, attempt {attempt + 1}/{retry_range}. Retrying after delay...", flush=True)
-            time.sleep(2 ** attempt)  # Exponential backoff: 1s, 2s, 4s
+            time.sleep(2 ** attempt)  # Exponential backoff
             continue
         elif request.status_code == 403:
             raise Exception('Too many requests in a short amount of time!\nYou\'ve hit the non-documented anti-abuse limit!')
@@ -173,7 +173,7 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
 
 def loc_counter_one_repo(owner, repo_name, data, cache_comment, history, addition_total, deletion_total, my_commits):
     """
-    Recursively call recursive_loc (since GraphQL can only search 50 commits at a time) 
+    Recursively call recursive_loc (since GraphQL can only search 100 commits at a time)
     only adds the LOC value of commits authored by me
     """
     for node in history['edges']:

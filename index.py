@@ -147,15 +147,25 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
         }
     }'''
     variables = {'repo_name': repo_name, 'owner': owner, 'cursor': cursor}
-    request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS, timeout=20)  # Add timeout=20
-    if request.status_code == 200:
-        if request.json()['data']['repository']['defaultBranchRef'] != None: # Only count commits if repo isn't empty
-            return loc_counter_one_repo(owner, repo_name, data, cache_comment, request.json()['data']['repository']['defaultBranchRef']['target']['history'], addition_total, deletion_total, my_commits)
-        else: return 0
-    force_close_file(data, cache_comment) # saves what is currently in the file before this program crashes
-    if request.status_code == 403:
-        raise Exception('Too many requests in a short amount of time!\nYou\'ve hit the non-documented anti-abuse limit!')
-    raise Exception('recursive_loc() has failed with a', request.status_code, request.text, QUERY_COUNT)
+    for attempt in range(3):  # Retry up to 3 times
+        request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS, timeout=10)
+        if request.status_code == 200:
+            if request.json()['data']['repository']['defaultBranchRef'] != None:
+                return loc_counter_one_repo(owner, repo_name, data, cache_comment, request.json()['data']['repository']['defaultBranchRef']['target']['history'], addition_total, deletion_total, my_commits)
+            else:
+                return 0
+        elif request.status_code in (502, 503, 504):  # Retry on gateway errors
+            print(f"API request failed with status {request.status_code}, attempt {attempt + 1}/3. Retrying after delay...", flush=True)
+            time.sleep(2 ** attempt)  # Exponential backoff: 1s, 2s, 4s
+            continue
+        elif request.status_code == 403:
+            raise Exception('Too many requests in a short amount of time!\nYou\'ve hit the non-documented anti-abuse limit!')
+        else:
+            force_close_file(data, cache_comment)
+            raise Exception('recursive_loc() has failed with a', request.status_code, request.text, QUERY_COUNT)
+    # If all retries fail
+    force_close_file(data, cache_comment)
+    raise Exception('recursive_loc() failed after 3 retries with status', request.status_code, request.text, QUERY_COUNT)
 
 
 def loc_counter_one_repo(owner, repo_name, data, cache_comment, history, addition_total, deletion_total, my_commits):

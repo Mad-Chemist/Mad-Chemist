@@ -360,7 +360,7 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     tree.write(filename, encoding='utf-8', xml_declaration=True)
 
 def draw_avatar_ascii(root, avatar_text):
-    un_pad = (ASCII_GEN_COLS-ASCII_PRINT_COLS)/2
+    un_pad = int((ASCII_GEN_COLS-ASCII_PRINT_COLS)/2)
     start_x = 15
     start_y = 30
     line_height = 20
@@ -378,7 +378,7 @@ def draw_avatar_ascii(root, avatar_text):
             x=f'{start_x}',
             y=f'{str(int(start_y) + i * line_height)}'
         )
-        tspan.text = line[un_pad:-1*un_pad]
+        tspan.text = line[un_pad:-un_pad]
 
 
 def justify_format(root, element_id, new_text, length=0):

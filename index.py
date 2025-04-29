@@ -347,7 +347,7 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     tree = etree.parse(filename)
     root = tree.getroot()
 
-    find_and_replace(root, 'avatar', ascii_text)
+    draw_avatar_ascii(root, ascii_text)
     justify_format(root, 'commit_data', commit_data, 22)
     justify_format(root, 'star_data', star_data, 14)
     justify_format(root, 'repo_data', repo_data, 6)
@@ -357,6 +357,25 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     justify_format(root, 'loc_add', loc_data[0])
     justify_format(root, 'loc_del', loc_data[1], 7)
     tree.write(filename, encoding='utf-8', xml_declaration=True)
+
+def draw_avatar_ascii(root, avatar_text):
+    start_x = 15
+    start_y = 30
+    ascii_art_lines = avatar_text.split('\n')
+    avatar = root.find(f".//*[@id='avatar']")
+    # Clear any existing content
+    for child in avatar_text_element:
+        avatar.remove(child)
+
+    # Add each line of ASCII art as a <tspan>
+    for i, line in enumerate(ascii_art_lines):
+    tspan = etree.SubElement(
+        avatar,
+        "{http://www.w3.org/2000/svg}tspan",
+        x=start_x,
+        y=str(int(start_y) + i * line_height)
+    )
+    tspan.text = line
 
 
 def justify_format(root, element_id, new_text, length=0):

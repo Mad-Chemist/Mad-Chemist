@@ -372,9 +372,9 @@ def draw_avatar_ascii(root, avatar_text):
     for i, line in enumerate(ascii_art_lines):
         tspan = etree.SubElement(
             avatar,
-            "{http://www.w3.org/2000/svg}tspan",
-            x=start_x,
-            y=str(int(start_y) + i * line_height)
+            "tspan",
+            x=f'{start_x}',
+            y=f'{str(int(start_y) + i * line_height)}'
         )
         tspan.text = line
 

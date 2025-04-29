@@ -285,9 +285,11 @@ def flush_cache(edges, filename, comment_size):
         data = []
         if comment_size > 0:
             data = f.readlines()[:comment_size] # only save the comment
+        print(data)
     with open(filename, 'w') as f:
         f.writelines(data)
         for node in edges:
+            print(hashlib.sha256(node['node']['nameWithOwner'].encode('utf-8')).hexdigest() + ' 0 0 0 0')
             f.write(hashlib.sha256(node['node']['nameWithOwner'].encode('utf-8')).hexdigest() + ' 0 0 0 0\n')
     print(f"Cache file flushed with {len(edges)} entries", flush=True)
 

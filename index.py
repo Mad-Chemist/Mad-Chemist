@@ -369,13 +369,13 @@ def draw_avatar_ascii(root, avatar_text):
 
     # Add each line of ASCII art as a <tspan>
     for i, line in enumerate(ascii_art_lines):
-    tspan = etree.SubElement(
-        avatar,
-        "{http://www.w3.org/2000/svg}tspan",
-        x=start_x,
-        y=str(int(start_y) + i * line_height)
-    )
-    tspan.text = line
+        tspan = etree.SubElement(
+            avatar,
+            "{http://www.w3.org/2000/svg}tspan",
+            x=start_x,
+            y=str(int(start_y) + i * line_height)
+        )
+        tspan.text = line
 
 
 def justify_format(root, element_id, new_text, length=0):

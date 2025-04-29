@@ -16,8 +16,9 @@ import hashlib
 HEADERS = {'Authorization': 'token '+ os.environ['ACCESS_TOKEN']}
 USER_NAME = os.environ['USER_NAME']
 QUERY_COUNT = {'user_getter': 0, 'follower_getter': 0, 'graph_repos_stars': 0, 'recursive_loc': 0, 'graph_commits': 0, 'loc_query': 0}
-ASCII_GEN_COLS = 50
+ASCII_GEN_COLS = 60
 ASCII_PRINT_COLS = 40
+ASCII_MAX_LINES = 25
 
 def daily_readme(birthday):
     """
@@ -372,13 +373,14 @@ def draw_avatar_ascii(root, avatar_text):
 
     # Add each line of ASCII art as a <tspan>
     for i, line in enumerate(ascii_art_lines):
-        tspan = etree.SubElement(
-            avatar,
-            "tspan",
-            x=f'{start_x}',
-            y=f'{str(int(start_y) + i * line_height)}'
-        )
-        tspan.text = line[un_pad:-un_pad]
+        if i <= ASCII_MAX_LINES:
+            tspan = etree.SubElement(
+                avatar,
+                "tspan",
+                x=f'{start_x}',
+                y=f'{str(int(start_y) + i * line_height)}'
+            )
+            tspan.text = line[un_pad:-un_pad]
 
 
 def justify_format(root, element_id, new_text, length=0):

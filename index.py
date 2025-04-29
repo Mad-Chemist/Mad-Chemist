@@ -375,7 +375,7 @@ def draw_avatar_ascii(root, avatar_text):
 
     # Add each line of ASCII art as a <tspan>
     for i, line in enumerate(ascii_art_lines):
-        if total_line_offset < i < ASCII_MAX_LINES+total_line_offset:
+        if total_line_offset <= i < ASCII_MAX_LINES+total_line_offset:
             tspan = etree.SubElement(
                 avatar,
                 "tspan",

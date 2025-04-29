@@ -148,8 +148,9 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
     }'''
     variables = {'repo_name': repo_name, 'owner': owner, 'cursor': cursor}
     time.sleep(1.0)  # Add 1-second delay
-    for attempt in range(3):  # Retry up to 3 times
-        print(f"Making request in recursive_loc (attempt {attempt + 1}/3)...", flush=True)
+    retry_range = 3;
+    for attempt in range(retry_range):  # Retry up to 3 times
+        print(f"Making request in recursive_loc (attempt {attempt + 1}/{retry_range})... {repo_name}", flush=True)
         request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS, timeout=20)
         if request.status_code == 200:
             if request.json()['data']['repository']['defaultBranchRef'] != None:
@@ -157,7 +158,7 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
             else:
                 return 0
         elif request.status_code in (502, 503, 504):  # Retry on gateway errors
-            print(f"API request in recursive_loc failed with status {request.status_code}, attempt {attempt + 1}/3. Retrying after delay...", flush=True)
+            print(f"API request in recursive_loc failed with status {request.status_code}, attempt {attempt + 1}/{retry_range}. Retrying after delay...", flush=True)
             time.sleep(2 ** attempt)  # Exponential backoff: 1s, 2s, 4s
             continue
         elif request.status_code == 403:

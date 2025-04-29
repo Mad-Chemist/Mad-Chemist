@@ -364,7 +364,7 @@ def draw_avatar_ascii(root, avatar_text):
     ascii_art_lines = avatar_text.split('\n')
     avatar = root.find(f".//*[@id='avatar']")
     # Clear any existing content
-    for child in avatar_text_element:
+    for child in avatar:
         avatar.remove(child)
 
     # Add each line of ASCII art as a <tspan>

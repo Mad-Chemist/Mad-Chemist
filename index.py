@@ -378,7 +378,7 @@ def draw_avatar_ascii(root, avatar_text):
             x=f'{start_x}',
             y=f'{str(int(start_y) + i * line_height)}'
         )
-        tspan.text = line[un_pad,-1*un_pad]
+        tspan.text = line[un_pad:-1*un_pad]
 
 
 def justify_format(root, element_id, new_text, length=0):

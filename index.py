@@ -281,33 +281,14 @@ def flush_cache(edges, filename, comment_size):
     This is called when the number of repositories changes or when the file is first created
     """
     print(f"Starting flush_cache for {len(edges)} repositories...", flush=True)
-    data = []
-    try:
-        with open(filename, 'r') as f:
-            if comment_size > 0:
-                data = f.readlines()[:comment_size]  # Only save the comment
-    except FileNotFoundError:
+    with open(filename, 'r') as f:
+        data = []
         if comment_size > 0:
-            data = ['This line is a comment block. Write whatever you want here.\n'] * comment_size
-    except Exception as e:
-        print(f"Error reading cache file: {e}", flush=True)
-        data = ['This line is a comment block. Write whatever you want here.\n'] * comment_size
-    # Write new cache file
-    try:
-        with open(filename, 'w') as f:
-            f.writelines(data)
-            f.flush()  # Ensure comment lines are written
-            print(f"Wrote {len(data)} comment lines", flush=True)
-            for i, node in enumerate(edges):
-                f.write(hashlib.sha256(node['node']['nameWithOwner'].encode('utf-8')).hexdigest() + ' 0 0 0 0\n')
-                if (i + 1) % 10 == 0:  # Flush every 10 lines
-                    f.flush()
-                    print(f"Wrote {i + 1} repository entries", flush=True)
-            f.flush()  # Final flush
-        print(f"Cache file flushed with {len(edges)} entries", flush=True)
-    except Exception as e:
-        print(f"Error writing cache file: {e}", flush=True)
-        raise
+            data = f.readlines()[:comment_size] # only save the comment
+    with open(filename, 'w') as f:
+        f.writelines(data)
+        for node in edges:
+            f.write(hashlib.sha256(node['node']['nameWithOwner'].encode('utf-8')).hexdigest() + ' 0 0 0 0\n')
     print(f"Cache file flushed with {len(edges)} entries", flush=True)
 
 def force_close_file(data, cache_comment):

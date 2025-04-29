@@ -346,8 +346,8 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     """
     tree = etree.parse(filename)
     root = tree.getroot()
-    avatar_element = root.find(".//svg:*[@id='avatar']", namespaces=namespaces)
-    avatar_element.text = ascii_text
+
+    find_and_replace(root, 'avatar', ascii_text)
     justify_format(root, 'commit_data', commit_data, 22)
     justify_format(root, 'star_data', star_data, 14)
     justify_format(root, 'repo_data', repo_data, 6)
@@ -361,7 +361,7 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
 
 def justify_format(root, element_id, new_text, length=0):
     """
-    Updates and formats the text of the element, and modifes the amount of dots in the previous element to justify the new text on the svg
+    Updates and formats the text of the element, and modifies the amount of dots in the previous element to justify the new text on the svg
     """
     if isinstance(new_text, int):
         new_text = f"{'{:,}'.format(new_text)}"

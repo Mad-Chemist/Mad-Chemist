@@ -366,6 +366,8 @@ def draw_avatar_ascii(root, avatar_text):
     start_y = 30
     line_height = 20
     ascii_art_lines = avatar_text.split('\n')
+    total_lines = len(ascii_art_lines)
+    total_line_offset = 0 if total_lines <= ASCII_MAX_LINES else int((total_lines-ASCII_MAX_LINES) /2)
     avatar = root.find(f".//*[@id='avatar']")
     # Clear any existing content
     for child in avatar:
@@ -373,7 +375,7 @@ def draw_avatar_ascii(root, avatar_text):
 
     # Add each line of ASCII art as a <tspan>
     for i, line in enumerate(ascii_art_lines):
-        if i < ASCII_MAX_LINES:
+        if total_line_offset < i < ASCII_MAX_LINES:
             tspan = etree.SubElement(
                 avatar,
                 "tspan",

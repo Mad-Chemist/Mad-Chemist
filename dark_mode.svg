@@ -16,7 +16,7 @@
         text, tspan {white-space: pre;}
     </style>
     <rect width="985px" height="530px" fill="#f6f8fa" rx="15"/>
-    <text x="15" y="30" fill="#24292f" class="ascii"/>
+    <text x="15" y="30" fill="#24292f" class="ascii" id="avatar"></text>
     <text x="390" y="30" fill="#24292f">
         <tspan x="390" y="450">- GitHub Stats</tspan> -—————————————————————————————————————————-—-
         <tspan x="390" y="470" class="cc">. </tspan><tspan class="key">Repos</tspan>:<tspan class="cc" id="repo_data_dots"> .... </tspan><tspan class="value" id="repo_data">47</tspan> {<tspan class="key">Contributed</tspan>: <tspan class="value" id="contrib_data">47</tspan>} | <tspan class="key">Stars</tspan>:<tspan class="cc" id="star_data_dots"> ............. </tspan><tspan class="value" id="star_data">2</tspan>

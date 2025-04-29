@@ -1,5 +1,6 @@
 import datetime
 from dateutil import relativedelta
+from ascii_magic import AsciiArt
 import requests
 import os
 from lxml import etree
@@ -324,13 +325,29 @@ def stars_counter(data):
     for node in data: total_stars += node['node']['stargazers']['totalCount']
     return total_stars
 
+def generate_avatar_ascii(avatar_url):
+    # Download the avatar image
+    response = requests.get(avatar_url, timeout=10)
+    if response.status_code != 200:
+        return "Failed to download avatar"
 
-def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data):
+    # Save the image temporarily
+    with open("avatar.jpg", "wb") as f:
+        f.write(response.content)
+
+    # Convert to ASCII art
+    art = AsciiArt.from_image("avatar.jpg")
+    ascii_text = art.to_ascii(columns=20, monochrome=True)  # Adjust columns for size
+    return ascii_text
+
+def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, ascii_text):
     """
     Parse SVG files and update elements with my age, commits, stars, repositories, and lines written
     """
     tree = etree.parse(filename)
     root = tree.getroot()
+    avatar_element = root.find(".//svg:*[@id='avatar']", namespaces=namespaces)
+    avatar_element.text = ascii_text
     justify_format(root, 'commit_data', commit_data, 22)
     justify_format(root, 'star_data', star_data, 14)
     justify_format(root, 'repo_data', repo_data, 6)
@@ -393,13 +410,14 @@ def user_getter(username):
         user(login: $login) {
             id
             createdAt
+            avatarUrl
         }
     }'''
     print(f"Fetching user data for {username}...")
     variables = {'login': username}
     request = simple_request(user_getter.__name__, query, variables)
     print(f"User data fetched, status: {request.status_code}")
-    return {'id': request.json()['data']['user']['id']}, request.json()['data']['user']['createdAt']
+    return {'id': request.json()['data']['user']['id']}, request.json()['data']['user']['createdAt'], request.json()['data']['user']['avatarUrl']
 
 def follower_getter(username):
     """
@@ -452,7 +470,7 @@ if __name__ == '__main__':
     print('Calculation times:')
     # define global variable for owner ID and calculate user's creation date
     user_data, user_time = perf_counter(user_getter, USER_NAME)
-    OWNER_ID, acc_date = user_data
+    OWNER_ID, acc_date, avatar_url = user_data
     formatter('account data', user_time)
     age_data, age_time = perf_counter(daily_readme, datetime.datetime(2002, 7, 5))
     formatter('age calculation', age_time)
@@ -463,11 +481,12 @@ if __name__ == '__main__':
     repo_data, repo_time = perf_counter(graph_repos_stars, 'repos', ['OWNER'])
     contrib_data, contrib_time = perf_counter(graph_repos_stars, 'repos', ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'])
     follower_data, follower_time = perf_counter(follower_getter, USER_NAME)
+    avatar_ascii, ascii_time = perf_counter('generate_avatar_ascii', avatar_url)
 
     for index in range(len(total_loc)-1): total_loc[index] = '{:,}'.format(total_loc[index]) # format added, deleted, and total LOC
 
-    svg_overwrite('dark_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1])
-    svg_overwrite('light_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1])
+    svg_overwrite('dark_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
+    svg_overwrite('light_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
 
     # move cursor to override 'Calculation times:' with 'Total function time:' and the total function time, then move cursor back
     print('\033[F\033[F\033[F\033[F\033[F\033[F\033[F\033[F',

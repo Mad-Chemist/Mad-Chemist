@@ -38,6 +38,7 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           USER_NAME: ${{ secrets.USER_NAME }}
         run: python index.py
+        timeout-minutes: 5
         continue-on-error: false
 
       - name: Commit and push changes

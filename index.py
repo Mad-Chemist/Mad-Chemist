@@ -410,9 +410,10 @@ def justify_format(root, element_id, new_text, length=0):
     find_and_replace(root, element_id, new_text)
     just_len = max(0, length - len(new_text))
     if just_len < 2:
-        dot_string = ' '
+        dot_string = '.'
     else:
         dot_string = ' ' + ('.' * just_len) + ' '
+    print(f"element:{element_id}, just_len: {just_len}, dots: '{dot_string}' ({len(dot_string)})")
     find_and_replace(root, f"{element_id}_dots", dot_string)
 
 

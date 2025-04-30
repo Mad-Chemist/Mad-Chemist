@@ -6,6 +6,7 @@ import os
 from lxml import etree
 import time
 import hashlib
+import json
 
 # CREDIT TO https://github.com/Andrew6rant
 
@@ -17,20 +18,29 @@ HEADERS = {'Authorization': 'token '+ os.environ['ACCESS_TOKEN']}
 USER_NAME = os.environ['USER_NAME']
 QUERY_COUNT = {'user_getter': 0, 'follower_getter': 0, 'graph_repos_stars': 0, 'recursive_loc': 0, 'graph_commits': 0, 'loc_query': 0}
 ASCII_GEN_COLS = 60
-ASCII_PRINT_COLS = 40
+ASCII_PRINT_COLS = 38
 ASCII_MAX_LINES = 25
+
+def load_config(file_path='config.json'):
+    try:
+        with open(file_path, 'r') as f:
+            config = json.load(f)
+        print(f"Successfully loaded config from {file_path}")
+        return config
+    except FileNotFoundError:
+        print(f"Error: {file_path} not found")
+        raise
+    except json.JSONDecodeError as e:
+        print(f"Error: Failed to parse {file_path}: {e}")
+        raise
 
 def daily_readme(birthday):
     """
     Returns the length of time since I was born
     e.g. 'XX years, XX months, XX days'
     """
-    diff = relativedelta.relativedelta(datetime.datetime.today(), birthday)
-    return '{} {}, {} {}, {} {}{}'.format(
-        diff.years, 'year' + format_plural(diff.years), 
-        diff.months, 'month' + format_plural(diff.months), 
-        diff.days, 'day' + format_plural(diff.days),
-        ' 🎂' if (diff.months == 0 and diff.days == 0) else '')
+    diff = relativedelta(datetime.today(), birthday)
+    return str(diff.years)
 
 
 def format_plural(unit):
@@ -342,7 +352,7 @@ def generate_avatar_ascii(avatar_url):
     ascii_text = art.to_ascii(columns=ASCII_GEN_COLS, monochrome=True)  # Adjust columns for size
     return ascii_text
 
-def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, ascii_text):
+def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, ascii_text):
     """
     Parse SVG files and update elements with my age, commits, stars, repositories, and lines written
     """
@@ -350,14 +360,19 @@ def svg_overwrite(filename, age_data, commit_data, star_data, repo_data, contrib
     root = tree.getroot()
 
     draw_avatar_ascii(root, ascii_text)
+    justify_format(root, 'age_data', age_data, 22)
     justify_format(root, 'commit_data', commit_data, 22)
     justify_format(root, 'star_data', star_data, 14)
-    justify_format(root, 'repo_data', repo_data, 6)
+    justify_format(root, 'repo_data', repo_data, 7)
     justify_format(root, 'contrib_data', contrib_data)
     justify_format(root, 'follower_data', follower_data, 10)
     justify_format(root, 'loc_data', loc_data[2], 9)
     justify_format(root, 'loc_add', loc_data[0])
     justify_format(root, 'loc_del', loc_data[1], 7)
+
+    for custom in enumerate(config.custom_values):
+        justify_format(root, custom.id, custom.value, custom.length)
+
     tree.write(filename, encoding='utf-8', xml_declaration=True)
 
 def draw_avatar_ascii(root, avatar_text):
@@ -498,7 +513,7 @@ if __name__ == '__main__':
     user_data, user_time = perf_counter(user_getter, USER_NAME)
     OWNER_ID, acc_date, avatar_url = user_data
     formatter('account data', user_time)
-    age_data, age_time = perf_counter(daily_readme, datetime.datetime(2002, 7, 5))
+    age_data, age_time = perf_counter(daily_readme, datetime.datetime(1991, 11, 20))
     formatter('age calculation', age_time)
     total_loc, loc_time = perf_counter(loc_query, ['OWNER', 'COLLABORATOR', 'ORGANIZATION_MEMBER'], 7)
     formatter('LOC (cached)', loc_time) if total_loc[-1] else formatter('LOC (no cache)', loc_time)
@@ -511,8 +526,9 @@ if __name__ == '__main__':
 
     for index in range(len(total_loc)-1): total_loc[index] = '{:,}'.format(total_loc[index]) # format added, deleted, and total LOC
 
-    svg_overwrite('dark_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
-    svg_overwrite('light_mode.svg', age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
+    config = load_config('config.json')
+    svg_overwrite('dark_mode.svg', config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
+    svg_overwrite('light_mode.svg', config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
 
     # move cursor to override 'Calculation times:' with 'Total function time:' and the total function time, then move cursor back
     print('\033[F\033[F\033[F\033[F\033[F\033[F\033[F\033[F',

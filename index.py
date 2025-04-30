@@ -254,7 +254,7 @@ def cache_builder(edges, comment_size, force_cache, loc_add=0, loc_del=0):
     If it has, run recursive_loc on that repository to update the LOC count
     """
     cached = True # Assume all repositories are cached
-    filename = 'cache/'+hashlib.sha256(USER_NAME.encode('utf-8')).hexdigest()+'.txt' # Create a unique filename for each user
+    filename = 'cache/'+get_hash_file_name()+'.txt' # Create a unique filename for each user
     try:
         with open(filename, 'r') as f:
             data = f.readlines()
@@ -326,7 +326,7 @@ def force_close_file(data, cache_comment):
     Forces the file to close, preserving whatever data was written to it
     This is needed because if this function is called, the program would've crashed before the file is properly saved and closed
     """
-    filename = 'cache/'+hashlib.sha256(USER_NAME.encode('utf-8')).hexdigest()+'.txt'
+    filename = 'cache/'+get_hash_file_name()+'.txt'
     with open(filename, 'w') as f:
         f.writelines(cache_comment)
         f.writelines(data)
@@ -341,7 +341,21 @@ def stars_counter(data):
     for node in data: total_stars += node['node']['stargazers']['totalCount']
     return total_stars
 
+# TODO: Is avatar caching feasible - or is avatar URL re-used beteween generations?
+# def check_avatar_cache(avatar_url):
+#     filename = 'cache/' + get_hash_file_name() + '-avatar.txt'
+#     try:
+#         with open(filename, 'r') as f:
+#             data = f.readlines()
+#     except FileNotFoundError: # If the cache file doesn't exist, create it
+#         data = []
+#         if comment_size > 0:
+#             for _ in range(comment_size): data.append('This line is a comment block. Write whatever you want here.\n')
+#         with open(filename, 'w') as f:
+#                 f.writelines(data)
+
 def generate_avatar_ascii(avatar_url):
+    print(f"Avatar URL: {avatar_url}")
     # Download the avatar image
     response = requests.get(avatar_url, timeout=10)
     if response.status_code != 200:
@@ -356,6 +370,7 @@ def generate_avatar_ascii(avatar_url):
     # Convert to ASCII art
     art = AsciiArt.from_image("avatar.png")
     ascii_text = art.to_ascii(columns=ASCII_GEN_COLS, monochrome=True)  # Adjust columns for size
+    art.to_html_file('ascii.html', columns=ASCII_GEN_COLS, width_ratio=2)
     return ascii_text
 
 def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, ascii_text):
@@ -434,13 +449,15 @@ def find_and_replace(root, element_id, new_text):
     if element is not None:
         element.text = new_text
 
+def get_hash_file_name():
+    return hashlib.sha256(USER_NAME.encode('utf-8')).hexdigest()
 
 def commit_counter(comment_size):
     """
     Counts up my total commits, using the cache file created by cache_builder.
     """
     total_commits = 0
-    filename = 'cache/'+hashlib.sha256(USER_NAME.encode('utf-8')).hexdigest()+'.txt' # Use the same filename as cache_builder
+    filename = 'cache/'+get_hash_file_name()+'.txt' # Use the same filename as cache_builder
     with open(filename, 'r') as f:
         data = f.readlines()
     cache_comment = data[:comment_size] # save the comment block

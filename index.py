@@ -373,13 +373,14 @@ def draw_avatar_color_ascii(root, ascii):
     avatar_rows = extract_html_for_ascii(ascii)
     total_lines = len(avatar_rows)
     total_line_offset = 0 if total_lines <= ASCII_MAX_LINES else int((total_lines-ASCII_MAX_LINES) /2)
+    start_row = 0 if total_lines <= ASCII_MAX_LINES else total_line_offset + 1
 
     avatar = root.find(f".//*[@id='avatar']")
     # Clear any existing content
     for child in avatar:
         avatar.remove(child)
 
-    for row_idx, row in enumerate(avatar_rows[total_line_offset:-total_line_offset]):
+    for row_idx, row in enumerate(avatar_rows[start_row:-total_line_offset]):
         x_pos = start_x
         text_elem = etree.SubElement(avatar, "tspan", x=str(x_pos), y=str(start_y+(row_idx*line_height)))
         for text, color in row[un_pad:-un_pad]:

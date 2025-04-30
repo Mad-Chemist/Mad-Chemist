@@ -369,6 +369,7 @@ def draw_avatar_color_ascii(root, ascii):
     start_y = 30
     line_height = 20
     un_pad = int((ASCII_GEN_COLS-ASCII_PRINT_COLS)/2)
+    total_lines = len(avatar_rows)
     total_line_offset = 0 if total_lines <= ASCII_MAX_LINES else int((total_lines-ASCII_MAX_LINES) /2)
     avatar = root.find(f".//*[@id='avatar']")
     # Clear any existing content

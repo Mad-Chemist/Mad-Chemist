@@ -23,7 +23,7 @@
     {
       "id": "pkgs_data",
       "length": 46,
-      "value": "ExpressJS, D3, ChartJS, Socket.io, MediaSoup,"
+      "value": "ExpressJS, D3.js, ChartJS, Socket.io, MediaSoup,"
     },
     {
       "id": "pkgs2_data",

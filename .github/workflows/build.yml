@@ -49,7 +49,6 @@ jobs:
           git config --global user.email "github-actions-bot@Mad-Chemist.github.io"
           git add light_mode.svg dark_mode.svg
           git add cache/*
-          git add ascii.html
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else

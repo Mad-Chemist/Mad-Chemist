@@ -345,7 +345,7 @@ def extract_html_for_ascii(html):
     avatar_rows = [[]]
     root = etree.HTML("<pre>" + html + "</pre>")
     children = root.cssselect('pre > *')
-
+    color_re = re.compile(r'color:\s*(#[0-9a-fA-F]{6})')
     row_pos = 0
     for child in children:
         print(f"found element in extract_html_for_ascii {child.tag}")

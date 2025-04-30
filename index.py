@@ -362,7 +362,7 @@ def extract_html_for_ascii(html):
 
     return avatar_rows
 
-def draw_avatar_color_ascii(avatar, ascii):
+def draw_avatar_color_ascii(root, ascii):
     start_x = 15
     start_y = 30
     line_height = 20

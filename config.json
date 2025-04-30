@@ -23,12 +23,22 @@
     {
       "id": "pkgs_data",
       "length": 47,
-      "value": "ExpressJS, ChartJS, Socket.io, D3, MediaSoup..."
+      "value": "ExpressJS, D3, ChartJS, Socket.io, MediaSoup,"
+    },
+    {
+      "id": "pkgs2_data",
+      "length": 47,
+      "value": "Electron, LightningJS, DataTables, Bull Queue"
     },
     {
       "id": "test_data",
       "length": 48,
       "value": "Jasmine, Karma, Selenium, QUnit, SinonJS, Postman"
+    },
+    {
+      "id": "misc_data",
+      "length": 51,
+      "value": "USPS NCOA, Canvas, CloudFlare, FFMPEG, WebRTC"
     },
     {
       "id": "hobbies_digital_data",

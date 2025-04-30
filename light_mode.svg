@@ -25,17 +25,17 @@
         <tspan x="390" y="70" class="cc">. </tspan><tspan class="key">Age</tspan>:<tspan class="cc" id="age_data_dots"> .................... </tspan><tspan class="value" id="age_data">33</tspan>
         <tspan x="390" y="90" class="cc">. </tspan><tspan class="key">IDE</tspan>:<tspan class="cc" id="ide_data_dots"> ...................................... </tspan><tspan class="value" id="ide_data">WebStorm, DataGrip</tspan>
 
-        <tspan x="390" y="130" class="cc">- Skills -——————-----------———————————————————————————————-—</tspan>
+        <tspan x="390" y="130">- Skills -——————-----------———————————————————————————————-—</tspan>
         <tspan x="390" y="150" class="cc">. </tspan><tspan class="key">Languages</tspan>:<tspan class="cc" id="planguages_data_dots"> ........ </tspan><tspan class="value" id="planguages_data">NodeJS, SQL, PHP, Shell, HTML, CSS, Python</tspan>
         <tspan x="390" y="170" class="cc">. </tspan><tspan class="key">Databases</tspan>:<tspan class="cc" id="dbs_data_dots"> .... </tspan><tspan class="value" id="dbs_data">BigQuery, Postgres, Mongo, Redis, NoSQL, MySQL</tspan>
         <tspan x="390" y="190" class="cc">. </tspan><tspan class="key">Packages</tspan>:<tspan class="cc" id="pkgs_data_dots"></tspan><tspan class="value" id="pkgs_data">ExpressJS, ChartJS, Socket.io, D3, MediaSoup, LightningJS, &amp; more</tspan>
         <tspan x="390" y="210" class="cc">. </tspan><tspan class="key">Testing</tspan>:<tspan class="cc" id="test_data_dots"> ... </tspan><tspan class="value" id="test_data">Jasmine, Karma, Selenium, QUnit, SinonJS, Postman</tspan>
 
-        <tspan x="390" y="250" class="cc">- Hobbies -——————----------———————————————————————————————-—</tspan>
+        <tspan x="390" y="250">- Hobbies -——————----------———————————————————————————————-—</tspan>
         <tspan x="390" y="270" class="cc">. </tspan><tspan class="key">Digital</tspan>:<tspan class="cc" id="hobbies_digital_data_dots"> .... </tspan><tspan class="value" id="hobbies_digital_data">Gaming, Data Visualization, AI, Automation, News</tspan>
         <tspan x="390" y="290" class="cc">. </tspan><tspan class="key">Offline</tspan>:<tspan class="cc" id="hobbies_offline_data_dots"> .......... </tspan><tspan class="value" id="hobbies_offline_data">Backpacking, Hiking, Jeeps, Gardening, DIY</tspan>
 
-        <tspan x="390" y="370">- Contact</tspan> -——————————————————————————————————————————————-—-
+        <tspan x="390" y="370">- Contact -——————————————————————————————————————————————-—-</tspan>
         <tspan x="390" y="390" class="cc">. </tspan><tspan class="key">Web</tspan>:<tspan class="cc" id="web_data_dots"> ............................................ </tspan><tspan class="value" id="web_data">www.b3wd.com</tspan>
         <tspan x="390" y="410" class="cc">. </tspan><tspan class="key">LinkedIn</tspan>:<tspan class="cc" id="linkedin_data_dots"> .............................................. </tspan><tspan class="value" id="linkedin_data">vicob</tspan>
 

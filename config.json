@@ -2,52 +2,52 @@
   "custom_values": [
     {
       "id": "os_data",
-      "length": 57,
+      "length": 54,
       "value": "Mac, Linux, Android"
     },
     {
       "id": "ide_data",
-      "length": 56,
+      "length": 53,
       "value": "WebStorm, DataGrip"
     },
     {
       "id": "planguages_data",
-      "length": 50,
+      "length": 47,
       "value": "NodeJS, SQL, PHP, Shell, HTML, CSS, Python"
     },
     {
       "id": "dbs_data",
-      "length": 50,
+      "length": 47,
       "value": "BigQuery, Postgres, Mongo, Redis, NoSQL, MySQL"
     },
     {
       "id": "pkgs_data",
-      "length": 51,
+      "length": 48,
       "value": "ExpressJS, ChartJS, Socket.io, D3, MediaSoup, LightningJS, & more"
     },
     {
       "id": "test_data",
-      "length": 52,
+      "length": 49,
       "value": "Jasmine, Karma, Selenium, QUnit, SinonJS, Postman"
     },
     {
       "id": "hobbies_digital_data",
-      "length": 52,
+      "length": 49,
       "value": "Gaming, Data Visualization, AI, Automation, News"
     },
     {
       "id": "hobbies_offline_data",
-      "length": 52,
+      "length": 49,
       "value": "Backpacking, Hiking, Jeeps, Gardening, DIY"
     },
     {
       "id": "linkedin_data",
-      "length": 51,
+      "length": 48,
       "value": "vicob"
     },
     {
       "id": "web_data",
-      "length": 56,
+      "length": 53,
       "value": "www.b3wd.com"
     }
   ]

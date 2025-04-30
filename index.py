@@ -360,7 +360,7 @@ def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data,
     root = tree.getroot()
 
     draw_avatar_ascii(root, ascii_text)
-    justify_format(root, 'age_data', age_data, 22)
+    justify_format(root, 'age_data', age_data, 53)
     justify_format(root, 'commit_data', commit_data, 22)
     justify_format(root, 'star_data', star_data, 14)
     justify_format(root, 'repo_data', repo_data, 7)

@@ -341,21 +341,45 @@ def stars_counter(data):
     for node in data: total_stars += node['node']['stargazers']['totalCount']
     return total_stars
 
-# TODO: Is avatar caching feasible - or is avatar URL re-used beteween generations?
-# def check_avatar_cache(avatar_url):
-#     filename = 'cache/' + get_hash_file_name() + '-avatar.txt'
-#     try:
-#         with open(filename, 'r') as f:
-#             data = f.readlines()
-#     except FileNotFoundError: # If the cache file doesn't exist, create it
-#         data = []
-#         if comment_size > 0:
-#             for _ in range(comment_size): data.append('This line is a comment block. Write whatever you want here.\n')
-#         with open(filename, 'w') as f:
-#                 f.writelines(data)
+def extract_html_for_ascii(html):
+    avatar_rows = [[]]
+    root = etree.HTML(html)
+    children = root.cssselect('pre > *')
+
+    row_pos = 0
+    for child in children:
+        if child.tag == 'br':
+            # Start a new row
+            row_pos += 1
+            avatar_rows.append([])
+        elif child.tag == 'span':
+            # Extract color from style attribute
+            style = child.get('style', '')
+            color_match = color_re.search(style)
+            color = color_match.group(1)
+            text = child.text
+            avatar_rows[row_pos].append((text, color))
+
+    return avatar_rows
+
+def draw_avatar_color_ascii(ascii):
+    start_x = 15
+    start_y = 30
+    line_height = 20
+    avatar = root.find(f".//*[@id='avatar']")
+    # Clear any existing content
+    for child in avatar:
+        avatar.remove(child)
+
+    avatar_rows = extract_html_for_ascii(ascii)
+    for row_idx, row in enumerate(avatar_rows):
+        x_pos = start_x
+        text_elem = etree.subElement(avatar, "text", x=str(x_pos), y=str(start_y+(row_idx*line_height)))
+        for text, color in row:
+            tspan = etree.SubElement(text_elem, "tspan", style=f'fill: {color};')
+            tspan.text = text if text != ' ' else '\u00A0'  # Use non-breaking space for spaces
 
 def generate_avatar_ascii(avatar_url):
-    print(f"Avatar URL: {avatar_url}")
     # Download the avatar image
     response = requests.get(avatar_url, timeout=10)
     if response.status_code != 200:
@@ -369,8 +393,8 @@ def generate_avatar_ascii(avatar_url):
 
     # Convert to ASCII art
     art = AsciiArt.from_image("avatar.png")
-    ascii_text = art.to_ascii(columns=ASCII_GEN_COLS, monochrome=True)  # Adjust columns for size
-    art.to_html_file('ascii.html', columns=ASCII_GEN_COLS, width_ratio=2)
+#     ascii_text = art.to_ascii(columns=ASCII_GEN_COLS, monochrome=True)  # Adjust columns for size
+    ascii_text = art.to_html(columns=ASCII_GEN_COLS, width_ratio=2)
     return ascii_text
 
 def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, ascii_text):
@@ -380,7 +404,8 @@ def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data,
     tree = etree.parse(filename)
     root = tree.getroot()
 
-    draw_avatar_ascii(root, ascii_text)
+#     draw_avatar_ascii(root, ascii_text)
+    draw_avatar_color_ascii(root, ascii_text)
     justify_format(root, 'age_data', age_data, 52)
     justify_format(root, 'commit_data', commit_data, 22)
     justify_format(root, 'star_data', star_data, 14)

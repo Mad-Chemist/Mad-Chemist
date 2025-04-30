@@ -351,10 +351,10 @@ def generate_avatar_ascii(avatar_url):
     input_array = np.array(input_image)
     output_array = rembg.remove(input_array)
     output_image = Image.fromarray(output_array)
-    output_image.save('avatar.jpg')
+    output_image.save('avatar.png')
 
     # Convert to ASCII art
-    art = AsciiArt.from_image("avatar.jpg")
+    art = AsciiArt.from_image("avatar.png")
     ascii_text = art.to_ascii(columns=ASCII_GEN_COLS, monochrome=True)  # Adjust columns for size
     return ascii_text
 

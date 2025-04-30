@@ -342,9 +342,8 @@ def stars_counter(data):
     return total_stars
 
 def extract_html_for_ascii(html):
-    print(f"extract_html_for_ascii\n{html}")
     avatar_rows = [[]]
-    root = etree.HTML(html)
+    root = etree.HTML("<pre>" + html + "</pre>")
     children = root.cssselect('pre > *')
 
     row_pos = 0

@@ -1,6 +1,7 @@
 python-dateutil
 requests
 lxml
+cssselect
 ascii_magic
 pillow
 numpy

@@ -370,8 +370,8 @@ def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data,
     justify_format(root, 'loc_add', loc_data[0])
     justify_format(root, 'loc_del', loc_data[1], 7)
 
-    for custom in enumerate(config.custom_values):
-        justify_format(root, custom.id, custom.value, custom.length)
+    for custom in enumerate(config['custom_values']):
+        justify_format(root, custom['id'], custom['value'], custom['length'])
 
     tree.write(filename, encoding='utf-8', xml_declaration=True)
 

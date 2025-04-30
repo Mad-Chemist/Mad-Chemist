@@ -409,7 +409,7 @@ def justify_format(root, element_id, new_text, length=0):
     new_text = str(new_text)
     find_and_replace(root, element_id, new_text)
     just_len = max(0, length - len(new_text))
-    if length === 0:
+    if length == 0:
         dot_string = ''
     elif just_len == 0:
         dot_string = ' '

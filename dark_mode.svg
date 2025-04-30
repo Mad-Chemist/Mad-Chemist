@@ -2,11 +2,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" font-family="ConsolasFallback,Consolas,monospace" width="985px" height="530px" font-size="16px">
     <style>
         @font-face {
-        src: local('Consolas'), local('Consolas Bold');
-        font-family: 'ConsolasFallback';
-        font-display: swap;
-        -webkit-size-adjust: 109%;
-        size-adjust: 109%;
+            src: local('Consolas'), local('Consolas Bold');
+            font-family: 'ConsolasFallback';
+            font-display: swap;
+            -webkit-size-adjust: 109%;
+            size-adjust: 109%;
         }
         .key {fill: #ffa657;}
         .value {fill: #a5d6ff;}

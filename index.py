@@ -366,9 +366,9 @@ def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data,
     justify_format(root, 'repo_data', repo_data, 7)
     justify_format(root, 'contrib_data', contrib_data)
     justify_format(root, 'follower_data', follower_data, 10)
-    justify_format(root, 'loc_data', loc_data[2], 9)
+    justify_format(root, 'loc_data', loc_data[2], 8)
     justify_format(root, 'loc_add', loc_data[0])
-    justify_format(root, 'loc_del', loc_data[1], 7)
+    justify_format(root, 'loc_del', loc_data[1], 5)
 
     for custom in config['custom_values']:
         justify_format(root, custom['id'], custom['value'], custom['length'])
@@ -409,7 +409,10 @@ def justify_format(root, element_id, new_text, length=0):
     new_text = str(new_text)
     find_and_replace(root, element_id, new_text)
     just_len = max(0, length - len(new_text))
-    dot_string = ' ' + ('.' * just_len) + ' '
+    if just_len < 1:
+        dot_string = ' ' * just_len
+    else:
+        dot_string = ' ' + ('.' * just_len) + ' '
     find_and_replace(root, f"{element_id}_dots", dot_string)
 
 

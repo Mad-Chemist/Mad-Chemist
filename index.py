@@ -374,7 +374,7 @@ def draw_avatar_color_ascii(root, ascii):
     avatar_rows = extract_html_for_ascii(ascii)
     for row_idx, row in enumerate(avatar_rows):
         x_pos = start_x
-        text_elem = etree.subElement(avatar, "text", x=str(x_pos), y=str(start_y+(row_idx*line_height)))
+        text_elem = etree.SubElement(avatar, "text", x=str(x_pos), y=str(start_y+(row_idx*line_height)))
         for text, color in row:
             tspan = etree.SubElement(text_elem, "tspan", style=f'fill: {color};')
             tspan.text = text if text != ' ' else '\u00A0'  # Use non-breaking space for spaces

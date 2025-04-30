@@ -342,12 +342,14 @@ def stars_counter(data):
     return total_stars
 
 def extract_html_for_ascii(html):
+    print(f"extract_html_for_ascii\n{html}")
     avatar_rows = [[]]
     root = etree.HTML(html)
     children = root.cssselect('pre > *')
 
     row_pos = 0
     for child in children:
+        print(f"found element in extract_html_for_ascii {child.tag}")
         if child.tag == 'br':
             # Start a new row
             row_pos += 1
@@ -373,6 +375,7 @@ def draw_avatar_color_ascii(root, ascii):
 
     avatar_rows = extract_html_for_ascii(ascii)
     for row_idx, row in enumerate(avatar_rows):
+        print(f"enumerating html ascii line {row_idx} length: {len(row)}")
         x_pos = start_x
         text_elem = etree.SubElement(avatar, "text", x=str(x_pos), y=str(start_y+(row_idx*line_height)))
         for text, color in row:

@@ -7,6 +7,10 @@ from lxml import etree
 import time
 import hashlib
 import json
+from io import BytesIO
+from PIL import Image
+import numpy as np
+import rembg
 
 # CREDIT TO https://github.com/Andrew6rant
 
@@ -343,9 +347,11 @@ def generate_avatar_ascii(avatar_url):
     if response.status_code != 200:
         return "Failed to download avatar"
 
-    # Save the image temporarily
-    with open("avatar.jpg", "wb") as f:
-        f.write(response.content)
+    input_image = Image.open(BytesIO(response.content))
+    input_array = np.array(input_image)
+    output_array = rembg.remove(input_array)
+    output_image = Image.fromarray(output_array)
+    output_image.save('avatar.jpg')
 
     # Convert to ASCII art
     art = AsciiArt.from_image("avatar.jpg")

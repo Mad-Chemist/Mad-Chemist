@@ -165,7 +165,7 @@ def recursive_loc(owner, repo_name, data, cache_comment, addition_total=0, delet
     }'''
     variables = {'repo_name': repo_name, 'owner': owner, 'cursor': cursor}
     time.sleep(1.0)  # Add 1-second delay
-    retry_range = 5;
+    retry_range = 5
     for attempt in range(retry_range):  # Retry up to 3 times
         print(f"Making request in recursive_loc (attempt {attempt + 1}/{retry_range})...", flush=True)
         request = requests.post('https://api.github.com/graphql', json={'query': query, 'variables':variables}, headers=HEADERS, timeout=20)
@@ -381,12 +381,15 @@ def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data,
 
     tree.write(filename, encoding='utf-8', xml_declaration=True)
 
+def filter_blank_ascii(x):
+    return len(x.strip()) > 0
+
 def draw_avatar_ascii(root, avatar_text):
     un_pad = int((ASCII_GEN_COLS-ASCII_PRINT_COLS)/2)
     start_x = 15
     start_y = 30
     line_height = 20
-    ascii_art_lines = avatar_text.split('\n')
+    ascii_art_lines = filter(filter_blank_ascii, avatar_text.split('\n'))
     total_lines = len(ascii_art_lines)
     total_line_offset = 0 if total_lines <= ASCII_MAX_LINES else int((total_lines-ASCII_MAX_LINES) /2)
     avatar = root.find(f".//*[@id='avatar']")

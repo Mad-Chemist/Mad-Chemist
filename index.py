@@ -553,13 +553,14 @@ def perf_counter(funct, *args):
     funct_return = funct(*args)
     return funct_return, time.perf_counter() - start
 
-def writeStatJson(commit_data,star_data ,repo_data ,contrib_data ,follower_data):
+def writeStatJson(total_loc,commit_data,star_data ,repo_data ,contrib_data ,follower_data):
     data = {
-        commit_data:commit_data,
-        star_data:star_data,
-        repo_data:repo_data,
-        contrib_data:contrib_data,
-        follower_data:follower_data
+        "total_loc":total_loc,
+        "commit_data":commit_data,
+        "star_data":star_data,
+        "repo_data":repo_data,
+        "contrib_data":contrib_data,
+        "follower_data":follower_data
     }
 
     with open("stats.json", "w") as file:
@@ -599,7 +600,7 @@ if __name__ == '__main__':
     config = load_config('config.json')
     svg_overwrite('dark_mode.svg', config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
     svg_overwrite('light_mode.svg', config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
-    writeStatJson(commit_data,star_data ,repo_data ,contrib_data ,follower_data)
+    writeStatJson(total_loc,commit_data,star_data ,repo_data ,contrib_data ,follower_data)
 
     # move cursor to override 'Calculation times:' with 'Total function time:' and the total function time, then move cursor back
     print('\033[F\033[F\033[F\033[F\033[F\033[F\033[F\033[F',

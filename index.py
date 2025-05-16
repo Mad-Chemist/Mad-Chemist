@@ -553,6 +553,13 @@ def perf_counter(funct, *args):
     funct_return = funct(*args)
     return funct_return, time.perf_counter() - start
 
+def pretty_now_time():
+    eastern = pytz.timezone('US/Eastern')
+    current_time = datetime.now(eastern)
+
+    # Format in a human-readable way
+    return current_time.strftime('%B %d, %Y %I:%M %p %Z')
+
 def writeStatJson(total_loc,commit_data,star_data ,repo_data ,contrib_data ,follower_data):
     data = {
         "total_loc":total_loc,
@@ -560,7 +567,8 @@ def writeStatJson(total_loc,commit_data,star_data ,repo_data ,contrib_data ,foll
         "star_data":star_data,
         "repo_data":repo_data,
         "contrib_data":contrib_data,
-        "follower_data":follower_data
+        "follower_data":follower_data,
+        "updated_at": pretty_now_time()
     }
 
     with open("stats.json", "w") as file:

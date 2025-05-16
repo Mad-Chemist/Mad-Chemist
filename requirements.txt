@@ -5,5 +5,5 @@ cssselect
 ascii_magic
 pillow
 numpy
-rembg[cpu]
 pytz
+rembg[cpu]

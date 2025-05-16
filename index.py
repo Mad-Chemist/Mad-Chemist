@@ -557,8 +557,6 @@ def perf_counter(funct, *args):
 def pretty_now_time():
     eastern = pytz.timezone('US/Eastern')
     current_time = datetime.now(eastern)
-
-    # Format in a human-readable way
     return current_time.strftime('%B %d, %Y %I:%M %p %Z')
 
 def write_stat_json(total_loc,commit_data,star_data,repo_data,contrib_data,follower_data):

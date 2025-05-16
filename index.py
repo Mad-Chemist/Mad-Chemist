@@ -350,7 +350,6 @@ def extract_html_for_ascii(html):
     color_re = re.compile(r'color:\s*(#[0-9a-fA-F]{6})')
     row_pos = 0
     for child in children:
-        print(f"found element in extract_html_for_ascii {child.tag}")
         if child.tag == 'br':
             # Start a new row
             row_pos += 1
@@ -556,7 +555,7 @@ def perf_counter(funct, *args):
 
 def pretty_now_time():
     eastern = pytz.timezone('US/Eastern')
-    current_time = datetime.now(eastern)
+    current_time = datetime.datetime.now(eastern)
     return current_time.strftime('%B %d, %Y %I:%M %p %Z')
 
 def write_stat_json(total_loc,commit_data,star_data,repo_data,contrib_data,follower_data):

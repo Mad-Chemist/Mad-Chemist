@@ -12,6 +12,7 @@ from PIL import Image
 import numpy as np
 import rembg
 import re
+import pytz
 
 # CREDIT TO https://github.com/Andrew6rant
 
@@ -560,7 +561,7 @@ def pretty_now_time():
     # Format in a human-readable way
     return current_time.strftime('%B %d, %Y %I:%M %p %Z')
 
-def writeStatJson(total_loc,commit_data,star_data ,repo_data ,contrib_data ,follower_data):
+def write_stat_json(total_loc,commit_data,star_data,repo_data,contrib_data,follower_data):
     data = {
         "total_loc":total_loc,
         "commit_data":commit_data,
@@ -608,7 +609,7 @@ if __name__ == '__main__':
     config = load_config('config.json')
     svg_overwrite('dark_mode.svg', config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
     svg_overwrite('light_mode.svg', config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, total_loc[:-1], avatar_ascii)
-    writeStatJson(total_loc,commit_data,star_data ,repo_data ,contrib_data ,follower_data)
+    write_stat_json(total_loc,commit_data,star_data ,repo_data ,contrib_data ,follower_data)
 
     # move cursor to override 'Calculation times:' with 'Total function time:' and the total function time, then move cursor back
     print('\033[F\033[F\033[F\033[F\033[F\033[F\033[F\033[F',

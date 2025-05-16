@@ -1,6 +1,13 @@
 {
-    "858": 858,
-    "2": 2,
-    "49": 49,
-    "7": 7
+    "total_loc": [
+        "1,438,348",
+        "311,484",
+        "1,126,864",
+        true
+    ],
+    "commit_data": 859,
+    "star_data": 2,
+    "repo_data": 49,
+    "contrib_data": 49,
+    "follower_data": 7
 }

@@ -406,11 +406,11 @@ def generate_avatar_ascii(avatar_url):
 
     # Convert to ASCII art
     art = AsciiArt.from_image("avatar.png")
-#     ascii_text = art.to_ascii(columns=ASCII_GEN_COLS, monochrome=True)  # Adjust columns for size
-    ascii_text = art.to_html(columns=ASCII_GEN_COLS, width_ratio=2)
+    # ascii_text = art.to_ascii(columns=ASCII_GEN_COLS, monochrome=True)  # Adjust columns for size
+    ascii_text = art.to_html(columns=ASCII_GEN_COLS, width_ratio=2, full_color=True)
 
     with open("ascii.html", "w", encoding="utf-8") as f:
-        f.write(ascii_text)
+        f.write("<pre>" + ascii_text + "</pre>")
 
     return ascii_text
 

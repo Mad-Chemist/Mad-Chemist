@@ -346,6 +346,7 @@ def stars_counter(data):
 def extract_html_for_ascii(html):
     avatar_rows = [[]]
     root = etree.HTML("<pre>" + html + "</pre>")
+    print(etree.tostring(root, pretty_print=True).decode())
     children = root.cssselect('pre > *')
     color_re = re.compile(r'color:\s*(#[0-9a-fA-F]{6})')
     row_pos = 0
@@ -394,12 +395,9 @@ def generate_avatar_ascii(avatar_url):
         return "Failed to download avatar"
 
     input_image = Image.open(BytesIO(response.content))
-#     input_array = np.array(input_image)
-#     output_array = rembg.remove(input_array)
-#     output_image = Image.fromarray(output_array)
-
     input_array = np.array(input_image)
-    output_image = Image.fromarray(input_array)
+    output_array = rembg.remove(input_array)
+    output_image = Image.fromarray(output_array)
     output_image.save('avatar.png')
 
     # Convert to ASCII art

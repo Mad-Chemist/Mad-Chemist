@@ -346,9 +346,8 @@ def stars_counter(data):
 def extract_html_for_ascii(html):
     avatar_rows = [[]]
     root = etree.HTML("<pre>" + html + "</pre>")
-    print(etree.tostring(root, pretty_print=True).decode())
     children = root.cssselect('pre > *')
-    color_re = re.compile(r'color:\s*(#[0-9a-fA-F]{6})')
+    color_re = re.compile(r'color:\s*(#[0-9a-fA-F]{3,6})')
     row_pos = 0
     for child in children:
         if child.tag == 'br':
@@ -356,12 +355,13 @@ def extract_html_for_ascii(html):
             row_pos += 1
             avatar_rows.append([])
         elif child.tag == 'span':
-            # Extract color from style attribute
-            style = child.get('style', '')
-            color_match = color_re.search(style)
-            color = color_match.group(1)
-            text = child.text
-            avatar_rows[row_pos].append((text, color))
+            for span in child.cssselect('span'):
+                # Extract color from style attribute
+                style = span.get('style', '')
+                color_match = color_re.search(style)
+                color = color_match.group(1)
+                text = span.text
+                avatar_rows[row_pos].append((text, color))
 
     return avatar_rows
 

@@ -358,8 +358,8 @@ def extract_html_for_ascii(html):
             # Extract color from style attribute
             style = child.get('style', '')
             color_match = color_re.search(style)
-            color = color_match.group(1)
-            text = child.text
+            color = color_match.group(1) if color_match else "#000000"  # default color
+            text = child.text or ""  # handle None text
             avatar_rows[row_pos].append((text, color))
 
     return avatar_rows

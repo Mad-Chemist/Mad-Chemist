@@ -358,7 +358,7 @@ def extract_html_for_ascii(html):
             # Extract color from style attribute
             style = child.get('style', '')
             color_match = color_re.search(style)
-            color = color_match.group(1) if color_match else "#FFFFFF"  # default color
+            color = color_match.group(1)
             text = child.text
             avatar_rows[row_pos].append((text, color))
 
@@ -394,9 +394,12 @@ def generate_avatar_ascii(avatar_url):
         return "Failed to download avatar"
 
     input_image = Image.open(BytesIO(response.content))
+#     input_array = np.array(input_image)
+#     output_array = rembg.remove(input_array)
+#     output_image = Image.fromarray(output_array)
+
     input_array = np.array(input_image)
-    output_array = rembg.remove(input_array)
-    output_image = Image.fromarray(output_array)
+    output_image = Image.fromarray(input_array)
     output_image.save('avatar.png')
 
     # Convert to ASCII art

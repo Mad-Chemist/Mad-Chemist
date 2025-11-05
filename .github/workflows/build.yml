@@ -47,7 +47,7 @@ jobs:
         run: |
           git config --global user.name "Mad-Chemist/GitHub-Actions-Bot"
           git config --global user.email "github-actions-bot@Mad-Chemist.github.io"
-          git add light_mode.svg dark_mode.svg stats.json
+          git add light_mode.svg dark_mode.svg stats.json ascii.html
           git add cache/*
           if git diff --staged --quiet; then
             echo "No changes to commit"

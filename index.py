@@ -408,6 +408,10 @@ def generate_avatar_ascii(avatar_url):
     art = AsciiArt.from_image("avatar.png")
 #     ascii_text = art.to_ascii(columns=ASCII_GEN_COLS, monochrome=True)  # Adjust columns for size
     ascii_text = art.to_html(columns=ASCII_GEN_COLS, width_ratio=2)
+
+    with open("ascii.html", "w", encoding="utf-8") as f:
+        f.write(ascii_text)
+
     return ascii_text
 
 def svg_overwrite(filename, config, age_data, commit_data, star_data, repo_data, contrib_data, follower_data, loc_data, ascii_text):
